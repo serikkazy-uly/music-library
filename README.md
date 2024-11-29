@@ -20,18 +20,21 @@
    ```bash
    git clone https://github.com/serikkazy-uly/music-library.git
    cd /music-library
-   
 
 2. Сборка и запуск контейнеров с помощью Makefile:
-   ```make run
+   ```bash
+   make run
    
 3. без make, с использованием docker compose:
-   ```docker-compose up --build
+   ```bash
+   docker-compose up --build
 
 4. Для выполнения миграций базы данных: 
-   ```make migrate
+   ```bash
+   make migrate
 
 5. Для генерации документации Swagger:
-   ```make swagger
+   ```bash
+   make swagger
 
-# Swagger UI будет доступен по адресу: http://localhost:8080/swagger/
+> Swagger UI будет доступен по адресу: http://localhost:8080/swagger/
