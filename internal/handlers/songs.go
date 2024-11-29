@@ -9,6 +9,13 @@ import (
 	"net/http"
 )
 
+// @Summary Get all songs
+// @Description Retrieve a list of all songs in the library
+// @Tags songs
+// @Accept json
+// @Produce json
+// @Success 200 {array} models.Song
+// @Router /songs [get]
 func GetSongsHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		utils.InfoLogger.Println("Fetching songs...")

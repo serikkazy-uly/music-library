@@ -12,7 +12,7 @@ import (
 func NewRouter(db *sql.DB) *mux.Router {
 	router := mux.NewRouter()
 
-	router.Handle("/swagger/*", httpSwagger.WrapHandler)
+	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	router.HandleFunc("/songs", GetSongsHandler(db)).Methods(http.MethodGet)
 	router.HandleFunc("/songs", AddSongHandler(db)).Methods(http.MethodPost)
