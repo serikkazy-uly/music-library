@@ -38,3 +38,21 @@
    make swagger
 
 > Swagger UI будет доступен по адресу: http://localhost:8080/swagger/
+
+### Подключение к внешнему API для получения информации о песнях
+
+1. **Внесите изменения в код для подключения к реальному API**:
+
+   Откройте файл `services.go` и найдите функцию `FetchSongDetailsFromAPI` замените URL на реальный API, например, [API Songs](https://api.example.com/info).
+
+   Пример:
+   ```go
+   func FetchSongDetailsFromAPI(groupName, songName string) (models.Song, error) {
+          apiURL := fmt.Sprintf("https://api.example.com/info?group=%s&song=%s", groupName, songName)
+          ...
+   }
+   
+2. Измените конфигурацию в .env:
+
+   EXTERNAL_API_URL=https://api.example.com/info
+
