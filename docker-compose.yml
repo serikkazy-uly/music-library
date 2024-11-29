@@ -9,9 +9,9 @@ services:
       - DB_DSN=postgres://user:secret@db:5432/music_library?sslmode=disable
       - EXTERNAL_API=http://external-api:8080
     depends_on:
-      - db
-#      db:
-#        condition: service_healthy
+#      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15
@@ -24,11 +24,12 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "user" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
 volumes:
   db_data:
 
-#    healthcheck:
-#      test: [ "CMD", "pg_isready", "-U", "user" ]
-#      interval: 5s
-#      timeout: 10s
-#      retries: 5
