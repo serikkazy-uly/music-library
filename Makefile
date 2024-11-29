@@ -10,7 +10,6 @@ down:
 	$(DOCKER_COMPOSE) down
 
 migrate:
-	# контейнер базы данных для выполнения миграций
 	docker exec -it $$(docker ps -qf "name=music-library-db-1") bash -c "go run internal/db/migrate.go"
 
 swagger:
