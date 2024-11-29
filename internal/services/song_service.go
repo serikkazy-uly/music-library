@@ -10,7 +10,7 @@ import (
 )
 
 func GetSongs(db *sql.DB, group, song, page, limit string) ([]models.Song, error) {
-	query := "SELECT id, group_name, song_name, release_date, text, link FROM songs"
+	query := "SELECT id, group_name, song_name, release_date, text, link FROM songs WHERE 1=1"
 
 	if group != "" {
 		query += fmt.Sprintf(" AND group_name LIKE '%%%s%%'", group)
@@ -133,7 +133,7 @@ func AddSongWithDetails(db *sql.DB, song models.Song, songDetail models.Song) (i
 	return id, nil
 }
 
-func DeleteSong(db *sql.DB, songID string) error {
+func DeleteSong(db *sql.DB, songID int) error {
 	_, err := db.Exec("DELETE FROM songs WHERE id = $1", songID)
 	return err
 }

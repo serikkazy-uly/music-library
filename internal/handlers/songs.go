@@ -8,15 +8,19 @@ import (
 	"music_library/internal/services"
 	"music_library/internal/utils"
 	"net/http"
+	"strconv"
 )
 
 // @Summary Get all songs
-// @Description Retrieve a list of all songs in the library
+// @Description Retrieve a list of all songs in the library with filtering and pagination
 // @Tags songs
 // @Accept json
 // @Produce json
-// @Success 200 {array} models.Song
-// @Router /songs [get]
+// @Param group query string false "Group name"
+// @Param song query string false "Song name"
+// @Param page query int false "Page number" default(1)
+// @Param limit query int false "Limit per page" default(10)
+
 func GetSongsHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		utils.InfoLogger.Println("Fetching songs...")
@@ -115,9 +119,16 @@ func AddSongWithAPIHandler(db *sql.DB) http.HandlerFunc {
 
 func DeleteSongHandler(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		songID := r.URL.Query().Get("song_id")
+		vars := mux.Vars(r)
+		songID := vars["id"]
 
-		err := services.DeleteSong(db, songID)
+		id, err := strconv.Atoi(songID)
+		if err != nil {
+			http.Error(w, "Invalid song ID", http.StatusBadRequest)
+			return
+		}
+
+		err = services.DeleteSong(db, id)
 		if err != nil {
 			http.Error(w, "Failed to delete song", http.StatusInternalServerError)
 			return
@@ -133,6 +144,12 @@ func UpdateSongHandler(db *sql.DB) http.HandlerFunc {
 		vars := mux.Vars(r)
 		songID := vars["id"]
 
+		id, err := strconv.Atoi(songID)
+		if err != nil {
+			http.Error(w, "Invalid song ID", http.StatusBadRequest)
+			return
+		}
+
 		var song models.Song
 
 		if err := json.NewDecoder(r.Body).Decode(&song); err != nil {
@@ -141,7 +158,7 @@ func UpdateSongHandler(db *sql.DB) http.HandlerFunc {
 		}
 		song.ID = id
 
-		err := services.UpdateSong(db, song)
+		err = services.UpdateSong(db, song)
 		if err != nil {
 			http.Error(w, "Failed to update song", http.StatusInternalServerError)
 			return
