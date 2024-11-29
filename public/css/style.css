@@ -1,0 +1,18 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+.song {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.song h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+.song p {
+    margin: 5px 0;
+}
+.song a {
+    color: #00f;
+}

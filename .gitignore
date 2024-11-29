@@ -1,0 +1,36 @@
+# Go specific
+/bin/
+/.obj/
+/vendor/
+
+# Docker specific
+*.log
+*.pid
+docker-compose.override.yml
+.docker/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~.nfs
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Go module dependency cache
+/go.sum
+
+# Swagger generated files
+/docs/swagger.yaml
+/docs/swagger.json
+
+# PostgreSQL
+pg_data/
+*.sql
+*.db
+
+# Logs and temporary files
+*.log
